@@ -9,6 +9,7 @@ from google.cloud import storage
 import time
 import telnyx
 from DataBase import get_price_from_db
+from google.oauth2 import service_account
 
 # Set your API key 
 API_KEY =  os.getenv('GOOGLE_API_KEY')
