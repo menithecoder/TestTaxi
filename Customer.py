@@ -369,7 +369,10 @@ def upload_mp3_to_bucket(bucket_name, source_file_path, destination_blob_name):
     """
     # Initialize the Cloud Storage client
     # Initialize the Cloud Storage client with the service account
-    client = storage.Client.from_service_account_json(json_creds)
+    credentials = service_account.Credentials.from_service_account_info(json_creds)
+
+# Initialize the client with credentials
+    client = storage.Client(credentials=credentials)
 
     # Get the bucket
     bucket = client.bucket(bucket_name)
@@ -390,7 +393,10 @@ def delete_mp3_from_bucket(bucket_name, destination_blob_name):
     :param destination_blob_name: Name of the file to delete in the bucket.
     """
     # Initialize the Cloud Storage client
-    client = storage.Client.from_service_account_json(json_creds)
+    credentials = service_account.Credentials.from_service_account_info(json_creds)
+
+
+    client = storage.Client(credentials=credentials)
 
     # Get the bucket
     bucket = client.bucket(bucket_name)
