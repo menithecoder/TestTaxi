@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Location</title>
+</head>
+<body>
+    <h1>Click the button below to share your location and phone number</h1>
+
+    <!-- Phone number input -->
+    <label for="phone">Enter your phone number:</label>
+    <input type="text" id="phone" name="phone">
+
+    <br><br>
+
+    <button onclick="getLocation()">Share My Location</button>
+
+    <script>
+        function getLocation() {
+            var phone = document.getElementById('phone').value; // Get phone number from input field
+            if (phone === "") {
+                alert("Please enter your phone number.");
+                return;
+            }
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lon = position.coords.longitude;
+                    alert("Location shared: " + lat + ", " + lon);
+
+                    // Send location and phone number to the server
+                    fetch('/send_location', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            latitude: lat,
+                            longitude: lon,
+                            phone: phone  // Include phone number in the request
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Location and phone sent:", data);
+                    })
+                    .catch(error => console.error("Error sending location and phone:", error));
+                }, function(error) {
+                    if (error.code === error.PERMISSION_DENIED) {
+                        alert("Please allow location access to share your location.");
+                    }
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+    </script>
+</body>
+</html>
