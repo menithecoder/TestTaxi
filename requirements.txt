@@ -1,0 +1,11 @@
+Flask==2.3.2
+twilio==7.15.0
+gunicorn==23.0.0
+telnyx==2.0.0
+six>=1.16.0
+google-cloud-speech
+pydub==0.25.1
+requests==2.28.1
+google-cloud-storage==2.0.0
+flask-cors
+paypalrestsdk==1.13.3
