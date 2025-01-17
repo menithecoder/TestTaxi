@@ -13,7 +13,7 @@ from DataBase import get_price_from_db
 # Set your API key 
 API_KEY =  os.getenv('GOOGLE_API_KEY')
 telnyx.api_key = os.getenv('TELNYX_API_KEY')
-
+json_creds = json.loads(os.getenv("GOOGLE_CREDENTIALS_JSON"))
 class CustomerInfo:
     def __init__(self, city="", street="", number="", destination="", phone_number="", price=0.0):
         self.city = city
@@ -369,7 +369,7 @@ def upload_mp3_to_bucket(bucket_name, source_file_path, destination_blob_name):
     """
     # Initialize the Cloud Storage client
     # Initialize the Cloud Storage client with the service account
-    client = storage.Client.from_service_account_json('service-account.json')
+    client = storage.Client.from_service_account_json(json_creds)
 
     # Get the bucket
     bucket = client.bucket(bucket_name)
@@ -390,7 +390,7 @@ def delete_mp3_from_bucket(bucket_name, destination_blob_name):
     :param destination_blob_name: Name of the file to delete in the bucket.
     """
     # Initialize the Cloud Storage client
-    client = storage.Client.from_service_account_json('service-account.json')
+    client = storage.Client.from_service_account_json(json_creds)
 
     # Get the bucket
     bucket = client.bucket(bucket_name)
